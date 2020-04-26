@@ -17,7 +17,6 @@ const Quote = props => {
   return <div className={className}>{props.quote}</div>;
 };
 
-// Talk about propTypes
 const viewOptionsJSON = {
   heading: "View Type",
   options: [
@@ -147,3 +146,5 @@ const App = () => {
     )
   );
 };
+
+ReactDOM.render(<App />, app);
