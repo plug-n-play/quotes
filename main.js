@@ -1,11 +1,11 @@
 const quotes = [
   {
-    author: 'Nelson Mandela',
-    text: `It always seems impossible until it's done.`,
+    author: `Amandeep Singh`,
+    text: 'Every passing day we are nearing death and a new Javascript Framework!',
   },
   {
-    author: `Jim Rohn`,
-    text: 'Either you run the day or the day runs you',
+    author: 'Nelson Mandela',
+    text: `It always seems impossible until it's done.`,
   },
   {
     author: `Walt Disney`,
@@ -38,6 +38,10 @@ const quotes = [
   {
     author: 'Rabindranath Tagore',
     text: `You can't cross the sea merely by standing and staring at the water`,
+  },
+  {
+    author: `Jim Rohn`,
+    text: 'Either you run the day or the day runs you',
   },
 ]
 
