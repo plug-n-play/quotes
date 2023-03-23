@@ -1,9 +1,5 @@
 const quotes = [
   {
-    author: `Amandeep Singh`,
-    text: 'Every passing day we are nearing death and a new Javascript Framework!',
-  },
-  {
     author: 'Nelson Mandela',
     text: `It always seems impossible until it's done.`,
   },
