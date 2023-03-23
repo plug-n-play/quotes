@@ -1,20 +1,63 @@
+const quotes = [
+  {
+    author: 'Nelson Mandela',
+    text: `It always seems impossible until it's done.`,
+  },
+  {
+    author: `Jim Rohn`,
+    text: 'Either you run the day or the day runs you',
+  },
+  {
+    author: `Walt Disney`,
+    text: 'If you can dream it, you can do it',
+  },
+  {
+    author: `O S Marden`,
+    text: 'A will finds a way',
+  },
+  {
+    author: `Ralph M`,
+    text: 'What you do today can improve all your tomorrows',
+  },
+  {
+    author: `Eleanor R`,
+    text: 'With the new day comes new strength and new thoughts',
+  },
+  {
+    author: `Amelia E`,
+    text: 'The most effective way to do it is to do it',
+  },
+  {
+    author: 'Sam L',
+    text: `Don't walk the clock; do what it does. Keep going.`,
+  },
+  {
+    author: 'Theodore R',
+    text: `Keep your eyes on the stars, and your feet on the ground.`,
+  },
+  {
+    author: 'Rabindranath Tagore',
+    text: `You can't cross the sea merely by standing and staring at the water`,
+  },
+]
+
 const app = document.getElementById("app");
-const Quote = props => {
+const Quote = ({ color, mview, quote, type, author }) => {
   let className;
-  switch (props.type) {
+  switch (type) {
     case "fill":
-      className = `card bg-${props.color}`;
+      className = `card bg-${color}`;
       break;
     case "nofill":
-      className = `card ${props.color}`;
+      className = `card ${color}`;
       break;
     default:
-      className = `${props.color} card-plain`;
+      className = `${color} card-plain`;
   }
 
-  className += props.mview ? " card--masonary" : "";
+  className += mview ? " card--masonary" : "";
 
-  return <div className={className}>{props.quote}</div>;
+  return <div className={className}>{quote?.text} - {quote?.author}</div>;
 };
 
 const viewOptionsJSON = {
@@ -35,6 +78,7 @@ const cardStyles = [
     type: "nofill"
   },
   {
+    color: "white",
     type: "nofill"
   },
   {
@@ -62,6 +106,7 @@ const cardStyles = [
     type: "nofill"
   },
   {
+    color: "green",
     type: "nofill"
   }
 ];
@@ -90,7 +135,7 @@ const ViewOptions = ({ heading, options, selected, onChange }) => {
 };
 
 const App = () => {
-  const [quotes, setQuotes] = React.useState(null);
+  // const [quotes, setQuotes] = React.useState(null);
   const [masonaryState, setMasonaryState] = React.useState(false);
   const [quotesViewType, setQuotesViewType] = React.useState("fWidth");
 
@@ -100,14 +145,15 @@ const App = () => {
     setMasonaryState(state);
   };
 
-  React.useEffect(() => {
-    fetch("https://apis.khalsa.now.sh/quotes")
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        setQuotes(data);
-      });
-  }, []);
+  // TODO: fetch quotes from API 
+  // React.useEffect(() => {
+  //   fetch("https://apis.khalsa.now.sh/quotes")
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log(data);
+  //       setQuotes(data);
+  //     });
+  // }, []);
 
   return (
     quotes && (
@@ -125,17 +171,16 @@ const App = () => {
           </aside>
 
           <div
-            className={`quotes-container ${
-              masonaryState ? "quotes-container--masonary" : ""
-            }`}
+            className={`quotes-container ${masonaryState ? "quotes-container--masonary" : ""
+              }`}
           >
-            {cardStyles.map((style, index) => {
+            {cardStyles.map(({ color, type }, index) => {
               return (
                 <Quote
                   key={index}
-                  color={style.color}
+                  color={color}
                   quote={quotes[index]}
-                  type={style.type}
+                  type={type}
                   mview={masonaryState}
                 />
               );
