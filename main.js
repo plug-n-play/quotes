@@ -63,8 +63,8 @@ const Quote = ({ color, mview, quote, type, author }) => {
 const viewOptionsJSON = {
   heading: "View Type",
   options: [
-    { quotation: "Full width", value: "fWidth" },
-    { quotation: "Masonary", value: "masonary" }
+    { text: "Full width", value: "fWidth" },
+    { text: "Masonary", value: "masonary" }
   ]
 };
 
