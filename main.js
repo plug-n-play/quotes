@@ -1,43 +1,43 @@
-const quotes = [
+const _quotes = [
   {
     author: 'Nelson Mandela',
-    text: `It always seems impossible until it's done.`,
+    quotation: `It always seems impossible until it's done.`,
   },
   {
     author: `Walt Disney`,
-    text: 'If you can dream it, you can do it',
+    quotation: 'If you can dream it, you can do it',
   },
   {
     author: `O S Marden`,
-    text: 'A will finds a way',
+    quotation: 'A will finds a way',
   },
   {
     author: `Ralph M`,
-    text: 'What you do today can improve all your tomorrows',
+    quotation: 'What you do today can improve all your tomorrows',
   },
   {
     author: `Eleanor R`,
-    text: 'With the new day comes new strength and new thoughts',
+    quotation: 'With the new day comes new strength and new thoughts',
   },
   {
     author: `Amelia E`,
-    text: 'The most effective way to do it is to do it',
+    quotation: 'The most effective way to do it is to do it',
   },
   {
     author: 'Sam L',
-    text: `Don't walk the clock; do what it does. Keep going.`,
+    quotation: `Don't walk the clock; do what it does. Keep going.`,
   },
   {
     author: 'Theodore R',
-    text: `Keep your eyes on the stars, and your feet on the ground.`,
+    quotation: `Keep your eyes on the stars, and your feet on the ground.`,
   },
   {
     author: 'Rabindranath Tagore',
-    text: `You can't cross the sea merely by standing and staring at the water`,
+    quotation: `You can't cross the sea merely by standing and staring at the water`,
   },
   {
     author: `Jim Rohn`,
-    text: 'Either you run the day or the day runs you',
+    quotation: 'Either you run the day or the day runs you',
   },
 ]
 
@@ -57,14 +57,14 @@ const Quote = ({ color, mview, quote, type, author }) => {
 
   className += mview ? " card--masonary" : "";
 
-  return <div className={className}>{quote?.text} - {quote?.author}</div>;
+  return <div className={className}>{quote?.quotation} - {quote?.author}</div>;
 };
 
 const viewOptionsJSON = {
   heading: "View Type",
   options: [
-    { text: "Full width", value: "fWidth" },
-    { text: "Masonary", value: "masonary" }
+    { quotation: "Full width", value: "fWidth" },
+    { quotation: "Masonary", value: "masonary" }
   ]
 };
 
@@ -135,7 +135,9 @@ const ViewOptions = ({ heading, options, selected, onChange }) => {
 };
 
 const App = () => {
-  // const [quotes, setQuotes] = React.useState(null);
+  const [quotes, setQuotes] = React.useState(null);
+  const url = 'https://3qn1qi6i5g.execute-api.us-east-1.amazonaws.com/quotes';
+  const _url = "https://iyzczmj29i.execute-api.us-east-1.amazonaws.com/prod/pets/";
   const [masonaryState, setMasonaryState] = React.useState(false);
   const [quotesViewType, setQuotesViewType] = React.useState("fWidth");
 
@@ -144,16 +146,25 @@ const App = () => {
     const state = ev.target.value === "masonary" ? true : false;
     setMasonaryState(state);
   };
-
-  // TODO: fetch quotes from API 
-  // React.useEffect(() => {
-  //   fetch("https://apis.khalsa.now.sh/quotes")
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       console.log(data);
-  //       setQuotes(data);
-  //     });
-  // }, []);
+  
+  React.useEffect(() => {
+    try {
+      // debugger;
+      // fetch(url, { method: "GET", mode: 'no-cors', headers: { 'Content-Type': 'application/json',}})
+      fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        // debugger;
+        console.log(data);
+        setQuotes(JSON.parse(data.body));
+        // debugger;
+      });
+    } catch(e) {
+      debugger;
+      setQuotes(_quotes);
+    }
+    
+  }, []);
 
   return (
     quotes && (
