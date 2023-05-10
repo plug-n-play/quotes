@@ -39,26 +39,7 @@ const _quotes = [
     author: `Jim Rohn`,
     quotation: 'Either you run the day or the day runs you',
   },
-]
-
-const app = document.getElementById("app");
-const Quote = ({ color, mview, quote, type, author }) => {
-  let className;
-  switch (type) {
-    case "fill":
-      className = `card bg-${color}`;
-      break;
-    case "nofill":
-      className = `card ${color}`;
-      break;
-    default:
-      className = `${color} card-plain`;
-  }
-
-  className += mview ? " card--masonary" : "";
-
-  return <div className={className}>{quote?.quotation} - {quote?.author}</div>;
-};
+];
 
 const viewOptionsJSON = {
   heading: "View Type",
@@ -111,22 +92,41 @@ const cardStyles = [
   }
 ];
 
+const app = document.getElementById("app");
+const Quote = ({ color, mview, quote, type }) => {
+  let className;
+  switch (type) {
+    case "fill":
+      className = `card bg-${color}`;
+      break;
+    case "nofill":
+      className = `card ${color}`;
+      break;
+    default:
+      className = `${color} card-plain`;
+  }
+
+  className += mview ? " card--masonary" : "";
+
+  return <div className={className}>{quote?.quotation} - {quote?.author}</div>;
+};
+
 const ViewOptions = ({ heading, options, selected, onChange }) => {
   return (
     <div className="pollOption">
       <h3>{heading}</h3>
-      {options.map((choice, index) => (
+      {options.map(({value, text}, index) => (
         <div key={index}>
           <label>
             <input
               type="radio"
               name="vote"
-              value={choice.value}
+              value={value}
               key={index}
-              checked={selected === choice.value}
+              checked={selected === value}
               onChange={onChange}
             />
-            <span>{choice.text}</span>
+            <span>{text}</span>
           </label>
         </div>
       ))}
@@ -137,7 +137,6 @@ const ViewOptions = ({ heading, options, selected, onChange }) => {
 const App = () => {
   const [quotes, setQuotes] = React.useState(null);
   const url = 'https://3qn1qi6i5g.execute-api.us-east-1.amazonaws.com/quotes';
-  const _url = "https://iyzczmj29i.execute-api.us-east-1.amazonaws.com/prod/pets/";
   const [masonaryState, setMasonaryState] = React.useState(false);
   const [quotesViewType, setQuotesViewType] = React.useState("fWidth");
 
@@ -149,18 +148,10 @@ const App = () => {
   
   React.useEffect(() => {
     try {
-      // debugger;
-      // fetch(url, { method: "GET", mode: 'no-cors', headers: { 'Content-Type': 'application/json',}})
       fetch(url)
       .then(response => response.json())
-      .then(data => {
-        // debugger;
-        console.log(data);
-        setQuotes(JSON.parse(data.body));
-        // debugger;
-      });
+      .then(({quotes}) => setQuotes(quotes));
     } catch(e) {
-      debugger;
       setQuotes(_quotes);
     }
     
